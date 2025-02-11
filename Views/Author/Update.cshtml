@@ -1,0 +1,30 @@
+﻿@model QuanLyThuVien.Models.Author
+
+<h1>Cập nhật thông tin tác giả</h1>
+<form method="post" asp-action="Update">
+    <div class="row mb-1">
+        <label asp-for="AuthorId" class="col-md control-label">Mã tác giả</label>
+        <div class="col-md">
+            <input asp-for="AuthorId" type="text" class="form-control" />
+            <span asp-validation-for="AuthorId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label asp-for="Name" class="col-md control-label">Tên tác giả</label>
+        <div class="col-md">
+            <input asp-for="Name" type="text" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label asp-for="BirthDate" class="col-md control-label">Ngày sinh</label>
+        <div class="col-md">
+            <input asp-for="BirthDate" type="date" class="form-control" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        <button type="submit" class="btn btn-success">Đồng ý</button>
+    </div>
+</form>
