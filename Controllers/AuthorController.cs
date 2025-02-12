@@ -31,16 +31,8 @@ namespace QuanLyThuVien.Controllers
                 var qr = from a in dbContext.Authors
                          orderby a.AuthorId descending
                          select a;
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var Authors = qr.Where(a => a.Name.Contains(id)).ToList();
-                    return View(Authors);
-                }
-                else
-                {
-                    Author = await qr.ToListAsync();
-                    return View();
-                }
+                var AuthorsFiltered = await qr.Where(a => a.Name.Contains(id)).ToListAsync();
+                return View(AuthorsFiltered);
             }
         }
 

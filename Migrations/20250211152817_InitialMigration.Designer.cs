@@ -11,7 +11,7 @@ using QuanLyThuVien.Models;
 namespace QuanLyThuVien.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250211092558_InitialMigration")]
+    [Migration("20250211152817_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -266,8 +266,6 @@ namespace QuanLyThuVien.Migrations
 
                     b.HasKey("BookId");
 
-                    b.HasIndex("AuthorId");
-
                     b.ToTable("Books");
                 });
 
@@ -320,17 +318,6 @@ namespace QuanLyThuVien.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("QuanLyThuVien.Models.Book", b =>
-                {
-                    b.HasOne("QuanLyThuVien.Models.Author", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
                 });
 #pragma warning restore 612, 618
         }

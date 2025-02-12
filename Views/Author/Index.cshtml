@@ -4,16 +4,15 @@
 }
 
 <h1>Tác giả</h1>
-<div class="row mb-3">
-    <form method="post" asp-action="Index">
-        <div class="col-8">
-            <label class="col-3 form-label">Tìm Kiếm</label>
-            <div class="col-9">
-                <input name="id" class="form-control" placeholder="tên tác giả" value="" />
-                <button type="submit">Tìm</button>
-            </div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <form method="post" asp-action="Index" class="d-flex w-50">
+        <label class="form-label me-2">Tìm Kiếm</label>
+        <div class="input-group">
+            <input name="id" class="form-control" placeholder="Tên tác giả" value="" />
+            <button type="submit" class="btn btn-primary">Tìm</button>
         </div>
     </form>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBookModal">Thêm</button>
 </div>
 <table class="table table-borderd table-hover">
     <tr class="table-success">
@@ -65,7 +64,7 @@
     }
 </table>
 
-<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBookModal">Thêm</button>
+
 
 <!-- Add Modal -->
 <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">

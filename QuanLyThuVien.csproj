@@ -22,10 +22,12 @@
     <None Remove="ViewModels\" />
     <None Remove="Views\Account\" />
     <None Remove="Views\Author\" />
+    <None Remove="Views\Book\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Author\" />
+    <Folder Include="Views\Book\" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,149 @@
+﻿@model List<QuanLyThuVien.Models.Book>
+@{
+    ViewData["Title"] = "Sách";
+}
+<h1>Thư Viện</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <form method="post" asp-action="Index" class="d-flex w-50">
+        <label class="form-label me-2">Tìm Kiếm</label>
+        <div class="input-group">
+            <input name="id" class="form-control" placeholder="Tên sách" value="" />
+            <button type="submit" class="btn btn-primary">Tìm</button>
+        </div>
+    </form>
+
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBookModal">Thêm</button>
+</div>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr class="table-success">
+            <th>Mã sách</th>
+            <th>Tên sách</th>
+            <th>Ngày xuất bản</th>
+            <th>Nhà xuất bản</th>
+            <th>Mã tác giả</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            int index = 0;
+            foreach (var book in Model)
+            {
+                index++;
+                <tr>
+                    <td>@book.BookId</td>
+                    <td>@book.Title</td>
+                    <td>@book.PublicationDate</td>
+                    <td>@book.PublishHouse</td>
+                    <td>@book.AuthorId</td>
+                    <td>
+                        <a asp-controller="Book" asp-action="Update" asp-route-id="@book.BookId" class="btn btn-primary">Update</a>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_@book.BookId">Delete</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete_@book.BookId" tabindex="-1" aria-labelledby="deleteModalLabel_@book.BookId" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel_@book.BookId">Xác nhận xóa</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc chắn muốn xóa cuốn sách "@book.Title" không?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                        <a asp-action="Delete" asp-route-id="@book.BookId" class="btn btn-primary">Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+<!-- Add Modal -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBookModalLabel">Thêm Sách</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addBookForm" novalidate>
+                    <div class="form-group">
+                        <label for="bookName">Tên sách</label>
+                        <input type="text" class="form-control" name="Title" placeholder="Nhập tên sách" required minlength="2" maxlength="50">
+                        <div class="invalid-feedback">Vui lòng nhập tên sách từ 2 đến 50 ký tự.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="productionDate">Ngày xuất bản</label>
+                        <input type="date" class="form-control" name="PublicationDate" required>
+                        <div class="invalid-feedback">Vui lòng chọn ngày xuất bản hợp lệ.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PublishHouse">Nhà xuất bản</label>
+                        <input type="text" class="form-control" name="PublishHouse" required>
+                        <div class="invalid-feedback">Vui lòng chọn nhà xuất bản hợp lệ.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Mã tác giả</label>
+                        <input type="text" class="form-control" name="AuthorId" placeholder="Nhập tên mã tác giả" required maxlength="50">
+                        <div class="invalid-feedback">Vui lòng nhập tên tác giả từ 2 đến 50 ký tự.</div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ajack -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            var form = $('#addBookForm');
+
+            form.on('submit', function (e) {
+                if (form[0].checkValidity() === false) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                } else {
+                    e.preventDefault();
+
+                    var formData = form.serialize();
+                    console.log("Form Data:", formData);
+
+                    $.ajax({
+                        url: '@Url.Action("Add")',
+                        type: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            if (response.success) {
+                                alert("Thêm sách thành công!");
+                                window.location.href = response.redirectUrl;
+                            } else {
+                                alert("Đã có lỗi xảy ra: " + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Có lỗi khi gửi yêu cầu.");
+                        }
+                    });
+                }
+                form.addClass('was-validated'); // Apply Bootstrap validation styles
+            });
+        });
+</script>

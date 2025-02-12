@@ -1,0 +1,37 @@
+﻿@model QuanLyThuVien.Models.Book
+
+<h1>Cập nhật thông tin sách</h1>
+<form method="post" asp-action="Update">
+    <div class="row mb-1">
+        <label asp-for="BookId" class="col-md control-label">Mã sách</label>
+        <div class="col-md">
+            <input asp-for="BookId" type="text" class="form-control" />
+            <span asp-validation-for="BookId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label asp-for="Title" class="col-md control-label">Tên sách</label>
+        <div class="col-md">
+            <input asp-for="Title" type="text" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label asp-for="PublicationDate" class="col-md control-label">Ngày xuất bản</label>
+        <div class="col-md">
+            <input asp-for="PublicationDate" type="date" class="form-control" />
+            <span asp-validation-for="PublicationDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label asp-for="PublishHouse" class="col-md control-label">Nhà xuất bản</label>
+        <div class="col-md">
+            <input asp-for="PublishHouse" type="text" class="form-control" />
+            <span asp-validation-for="PublishHouse" class="text-danger"></span>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        <button type="submit" class="btn btn-success">Đồng ý</button>
+    </div>
+</form>
